@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <title></title>
+        <script src="//cdn.bootcss.com/vue/1.0.10-csp/vue.min.js"></script>
+        <style>
+            #box{height: 300px;overflow-y: scroll}
+        </style>
+	</head>
+<body>
+<input type="test" id="name">
+<button onclick="cc()">进入房间</button>
+<script>
+    function cc(){
+        var name = document.getElementById('name').value;
+        if(!name){
+            alert("请输入名字");
+            return false;
+        }else{
+            var tm = {
+                    name:name,
+                    uid:new Date().getTime()
+                }
+                localStorage.setItem('temp_user',JSON.stringify(tm));
+                jn = tm;
+                location.href = './index.html';
+        }
+    }
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <title></title>
+        <script src="//cdn.bootcss.com/socket.io/2.2.0/socket.io.js"></script>
+        <script src="//cdn.bootcss.com/vue/1.0.10-csp/vue.min.js"></script>
+        <style>
+            #box{height: 300px;overflow-y: scroll}
+            .shadow{
+                width:200px;
+                height: 40px;
+                line-height: 40px;
+                background: rgba(0,0,0,0.4);
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                z-index: 2;
+                text-align: center;
+                color: #fff
+                }
+        </style>
+	</head>
+	<body id="app">
+        <div>
+            本人：<input type="text" id="id" placeholder="id">
+                 <input type="text" id="name" placeholder="名字"><br />
+        </div>
+        <div>
+            发给：<input type="text" id="id1" placeholder="id">
+                 <button onclick="sendmessage()">发送消息</button>
+        </div>
+        <textarea id="content"></textarea>
+        <div id="tips"></div>
+        <button onclick="cli()">连接服务器</button>
+
+        <script type="text/javascript">
+            var v = new Vue({
+                el: '#app',
+                data:{
+                    datas:[],
+                    len:0,
+                    //name:null,
+                    inroomuser:""
+                },
+                methods:{
+
+                }
+            })
+
+            var socket;
+            let isopen;
+            function cli(){
+
+                var uid = document.getElementById('id').value,
+                    name = document.getElementById('name').value;
+                    document.getElementById('tips').innerHTML = "连接中...";
+
+                    socket = io.connect('http://localhost:4000');
+
+                    socket.on('connect', function(){
+                        isopen = true;
+                        document.getElementById('tips').innerHTML = "已连接服务器";
+                        socket.send('Hi Server...');
+                    }) ;
+                    socket.on('message', function(r){
+                        // document.getElementById('message').innerHTML = `接收到信息${event.data}`;
+                    }) ;
+                    socket.on('disconnect', function(){ console.log('disconnected from server'); }) ;
+
+                    // 监听服务端事件
+                    socket.on('serverEve', function (data) {
+                        console.log(data);
+                        //发送自定义事件
+                        socket.emit('feEve', { my: 'data' });
+                    });
+
+
+                    // socket.onopen = function(event) {
+                    //     socket.send(JSON.stringify({type:0,uid:uid,name:name}));
+                    //     isopen = true;
+                    //     document.getElementById('tips').innerHTML = "已连接服务器";
+                    //     socket.onmessage = function(event) {
+                    //         console.log('收到消息',event.data);
+                    //     };
+                    //     socket.onclose = function(event) {
+                    //         isopen = false;
+                    //         document.getElementById('tips').innerHTML = "已与服务器断开链接,点击重新连接";
+                    //     };
+
+                    // };
+            }
+
+            function sendmessage(){
+                var content = document.getElementById('content').value,
+                    uid = document.getElementById('id1').value;
+                    name = document.getElementById('name').value;
+                if(isopen){
+                    socket.send(JSON.stringify({type:1,to_uid:uid,to_name:name,content:content}));
+                }else{
+                    alert('未连接到服务器');
+                }
+            }
+
+		</script>
+	</body>
+</html>

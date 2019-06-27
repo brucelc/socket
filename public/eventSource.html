@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <title></title>
+        <script src="//cdn.bootcss.com/vue/1.0.10-csp/vue.min.js"></script>
+        <style>
+            #box{height: 300px;overflow-y: scroll}
+            .shadow{
+                width:200px;
+                height: 40px;
+                line-height: 40px;
+                background: rgba(0,0,0,0.4);
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                z-index: 2;
+                text-align: center;
+                color: #fff
+                }
+        </style>
+	</head>
+	<body id="app">
+        <div id="tips"></div>
+        <div id="message"></div>
+        <button onclick="cli()">连接服务器</button>
+
+        <script type="text/javascript">
+            var v = new Vue({
+                el: '#app',
+                data:{
+                    datas:[],
+                    len:0,
+                    //name:null,
+                    inroomuser:""
+                },
+                methods:{
+
+                }
+            })
+
+            var socket;
+
+            function cli(){
+                    document.getElementById('tips').innerHTML = "连接中...";
+                    var source = new EventSource('http://localhost:3000/eventSource');
+
+                    console.log('source', source);
+                    source.onopen = function (event) { // 与服务器连接成功回调
+                      console.log('成功与服务器连接');
+                      document.getElementById('tips').innerHTML = "已连接服务器";
+
+
+                    }
+                    // 监听从服务器发送来的所有没有指定事件类型的消息(没有event字段的消息)
+                    source.onmessage = function (event) { // 监听未命名事件
+                      console.log('未命名事件', event.data)
+                      document.getElementById('message').innerHTML = `接收到信息${event.data}`;
+                    }
+                    source.onerror = function (error) { // 监听错误
+                      console.log('错误', error)
+                    }
+                    // 监听指定类型的事件（可以监听多个）
+                    source.addEventListener("myEve", function (event) {
+                      console.log("myEve", event.data)
+                    })
+            }
+		</script>
+	</body>
+</html>
