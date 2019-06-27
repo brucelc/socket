@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 // var view = require('./routes/view');
 
 var eventSource = require('./routes/eventSource');
-var socketIo = require('./routes/socketIo');
 
 var app = express();
 
@@ -44,7 +43,6 @@ app.all('*', function(req, res, next) {
 
 // api
 app.use('/eventSource', eventSource);
-app.use('/socketIo', socketIo);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -48,7 +48,6 @@
                     document.getElementById('tips').innerHTML = "连接中...";
                     var source = new EventSource('http://localhost:3000/eventSource');
 
-                    console.log('source', source);
                     source.onopen = function (event) { // 与服务器连接成功回调
                       console.log('成功与服务器连接');
                       document.getElementById('tips').innerHTML = "已连接服务器";

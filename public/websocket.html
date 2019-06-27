@@ -33,6 +33,10 @@
                  <button onclick="sendmessage()">发送消息</button>
         </div>
         <textarea id="content"></textarea>
+        <div>
+            <span>收到消息</span>
+            <span id="message"></span>
+        </div>
         <div id="tips"></div>
         <button onclick="cli()">连接服务器</button>
 
@@ -61,7 +65,8 @@
                         isopen = true;
                         document.getElementById('tips').innerHTML = "已连接服务器";
                         socket.onmessage = function(event) {
-                            console.log('收到消息',event.data);
+                            console.log('收到消息', event.data);
+                            document.getElementById('message').innerHTML = JSON.parse(event.data).content;
                         };
                         socket.onclose = function(event) {
                             isopen = false;

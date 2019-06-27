@@ -77,21 +77,6 @@
                         //发送自定义事件
                         socket.emit('feEve', { my: 'data' });
                     });
-
-
-                    // socket.onopen = function(event) {
-                    //     socket.send(JSON.stringify({type:0,uid:uid,name:name}));
-                    //     isopen = true;
-                    //     document.getElementById('tips').innerHTML = "已连接服务器";
-                    //     socket.onmessage = function(event) {
-                    //         console.log('收到消息',event.data);
-                    //     };
-                    //     socket.onclose = function(event) {
-                    //         isopen = false;
-                    //         document.getElementById('tips').innerHTML = "已与服务器断开链接,点击重新连接";
-                    //     };
-
-                    // };
             }
 
             function sendmessage(){
