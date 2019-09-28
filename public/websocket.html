@@ -59,7 +59,7 @@
                 var uid = document.getElementById('id').value,
                     name = document.getElementById('name').value;
                     document.getElementById('tips').innerHTML = "连接中...";
-                    socket = new WebSocket('ws://localhost:8002');
+                    socket = new WebSocket('ws://30.30.39.142:8002');
                     socket.onopen = function(event) {
                         socket.send(JSON.stringify({type:0,uid:uid,name:name}));
                         isopen = true;
