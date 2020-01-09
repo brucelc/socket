@@ -35,7 +35,7 @@
         <textarea id="content"></textarea>
         <div id="tips"></div>
         <button onclick="cli()">连接服务器</button>
-        
+
         <script type="text/javascript">
             var v = new Vue({
                 el: '#app',
@@ -46,27 +46,27 @@
                     inroomuser:""
                 },
                 methods:{
-                    
+
                 }
             })
 
-            var socket; 
+            var socket;
             function cli(){
                 var uid = document.getElementById('id').value,
                     name = document.getElementById('name').value;
-                    document.getElementById('tips').innerHTML = "连接中..."; 
-                    socket = new WebSocket('ws://socket.xbruce.cn:8002');
+                    document.getElementById('tips').innerHTML = "连接中...";
+                    socket = new WebSocket('ws://30.77.45.246:8002');
                     socket.onopen = function(event) {
                         socket.send(JSON.stringify({type:0,uid:uid,name:name}));
                         isopen = true;
                         document.getElementById('tips').innerHTML = "已连接服务器";
-                        socket.onmessage = function(event) { 
+                        socket.onmessage = function(event) {
                             console.log('收到消息',event.data);
-                        }; 
+                        };
                         socket.onclose = function(event) {
-                            isopen = false;  
-                            document.getElementById('tips').innerHTML = "已与服务器断开链接,点击重新连接";  
-                        }; 
+                            isopen = false;
+                            document.getElementById('tips').innerHTML = "已与服务器断开链接,点击重新连接";
+                        };
 
                     };
             }

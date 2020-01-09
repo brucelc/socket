@@ -1,5 +1,5 @@
 #### 2019-06-25更新
-- test/server2.js文件是socket服务的线上运行代码, 启动supervisor server.js
+- test/server2.js文件是socket服务的线上运行代码, 启动supervisor test/server2.js
   目前维持现状,
   index.html和main.html都是之前代码, 不要动
 
